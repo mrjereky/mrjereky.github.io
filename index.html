@@ -419,6 +419,7 @@
 <h2 id="为什么transform的效率高？"><a href="#为什么transform的效率高？" class="headerlink" title="为什么transform的效率高？"></a>为什么transform的效率高？</h2><p>因为transform既不会影响布局也不会影响绘制指令，他影响的只是渲染流程的最后一个⌈画（draw）⌋阶段。</p>
 <p>由于draw阶段在合成线程中，所以transform的变化几乎不会影响到渲染主线程。反之，渲染主线程无论如何忙碌，也不会影响transform的变化。</p>
 <p><img src="https://gitee.com/mrjereky/picgo/raw/master/typora/interview/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B.png" alt="浏览器渲染过程"></p>
+<p><img src="https://gitee.com/mrjereky/picgo/raw/master/typora/interview/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B.png" alt="123"></p>
 <h2 id="2-浏览器主要组成部分？"><a href="#2-浏览器主要组成部分？" class="headerlink" title="2. 浏览器主要组成部分？"></a>2. 浏览器主要组成部分？</h2><ol>
 <li>用户界面<br>呈现窗口、地址栏、前进后退按钮、收藏夹等部件</li>
 <li>渲染引擎<br>解析HTML和CSS，渲染页面（也即是浏览器内核）</li>
