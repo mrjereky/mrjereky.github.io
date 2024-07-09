@@ -9,20 +9,22 @@
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="浏览器1. 浏览器是如何渲染页面的？ 浏览器会解析html，生成DOM树。 在解析html的时候，当遇到css的时候，会解析CSS，生成样式规则树（style tree） DOM树和样式规则树回合成渲染树（render tree） 之后根据渲染树结构，计算每个元素的位置，大小等属性，生成布局信息 在这个过程中会产生回流（重排）和重绘 确定元素的位置、尺寸，称之为回流 生成元素的像素信息，比如每个像">
+  <meta name="description" content="浏览器浏览器是如何渲染页面的当浏览器的网络线程收到 HTML 文档后，会产生一个渲染任务，并将其传递给渲染主线程的消息队列。 在事件循环机制的作用下，渲染主线程取出消息队列的渲染任务，开启渲染流程。  整个渲染流程分为多个阶段，分别是：HTML 解析，样式计算，布局，分层，绘制，分块，光栅化，画。 每个阶段都有明确的输入和输出，上一个阶段的输出会成为下一个阶段的输入。 这样，整个渲染流程就形成了一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="interview browser">
 <meta property="og:url" content="https://mrjereky.github.io/2024/05/07/interview-browser/index.html">
 <meta property="og:site_name" content="Interview">
-<meta property="og:description" content="浏览器1. 浏览器是如何渲染页面的？ 浏览器会解析html，生成DOM树。 在解析html的时候，当遇到css的时候，会解析CSS，生成样式规则树（style tree） DOM树和样式规则树回合成渲染树（render tree） 之后根据渲染树结构，计算每个元素的位置，大小等属性，生成布局信息 在这个过程中会产生回流（重排）和重绘 确定元素的位置、尺寸，称之为回流 生成元素的像素信息，比如每个像">
+<meta property="og:description" content="浏览器浏览器是如何渲染页面的当浏览器的网络线程收到 HTML 文档后，会产生一个渲染任务，并将其传递给渲染主线程的消息队列。 在事件循环机制的作用下，渲染主线程取出消息队列的渲染任务，开启渲染流程。  整个渲染流程分为多个阶段，分别是：HTML 解析，样式计算，布局，分层，绘制，分块，光栅化，画。 每个阶段都有明确的输入和输出，上一个阶段的输出会成为下一个阶段的输入。 这样，整个渲染流程就形成了一">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/mrjereky/picgo/raw/master/typora/interview/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B.png">
 <meta property="article:published_time" content="2024-05-07T05:57:33.000Z">
-<meta property="article:modified_time" content="2024-06-06T13:04:05.293Z">
+<meta property="article:modified_time" content="2024-07-09T07:48:50.404Z">
 <meta property="article:author" content="Mr Jereky">
 <meta property="article:tag" content="Interview">
 <meta property="article:tag" content="browser">
 <meta property="article:tag" content="浏览器">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/mrjereky/picgo/raw/master/typora/interview/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B.png">
   
     <link rel="alternative" href="/atom.xml" title="Interview" type="application/atom+xml">
   
@@ -192,20 +194,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h1><h2 id="1-浏览器是如何渲染页面的？"><a href="#1-浏览器是如何渲染页面的？" class="headerlink" title="1. 浏览器是如何渲染页面的？"></a>1. 浏览器是如何渲染页面的？</h2><ol>
-<li>浏览器会解析html，生成DOM树。</li>
-<li>在解析html的时候，当遇到css的时候，会解析CSS，生成样式规则树（style tree）</li>
-<li>DOM树和样式规则树回合成渲染树（render tree）</li>
-<li>之后根据渲染树结构，计算每个元素的位置，大小等属性，生成布局信息<ol>
-<li>在这个过程中会产生回流（重排）和重绘</li>
-<li>确定元素的位置、尺寸，称之为回流</li>
-<li>生成元素的像素信息，比如每个像素的颜色，偏移量，称之为重绘</li>
-</ol>
-</li>
-<li>将布局信息交给浏览器，通过调用GPU绘制出来，显示在页面中</li>
-</ol>
-<hr>
-<p>当浏览器的网络线程收到 HTML 文档后，会产生一个渲染任务，并将其传递给渲染主线程的消息队列。</p>
+        <h1 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h1><h2 id="浏览器是如何渲染页面的"><a href="#浏览器是如何渲染页面的" class="headerlink" title="浏览器是如何渲染页面的"></a>浏览器是如何渲染页面的</h2><p>当浏览器的网络线程收到 HTML 文档后，会产生一个渲染任务，并将其传递给渲染主线程的消息队列。</p>
 <p>在事件循环机制的作用下，渲染主线程取出消息队列的渲染任务，开启渲染流程。</p>
 <hr>
 <p>整个渲染流程分为多个阶段，分别是：HTML 解析，样式计算，布局，分层，绘制，分块，光栅化，画。</p>
@@ -268,7 +257,7 @@
 <p>由于元素的布局信息也属于可见样式，所以reflow一定会引起repaint。</p>
 <h2 id="为什么transform的效率高？"><a href="#为什么transform的效率高？" class="headerlink" title="为什么transform的效率高？"></a>为什么transform的效率高？</h2><p>因为transform既不会影响布局也不会影响绘制指令，他影响的只是渲染流程的最后一个⌈画（draw）⌋阶段。</p>
 <p>由于draw阶段在合成线程中，所以transform的变化几乎不会影响到渲染主线程。反之，渲染主线程无论如何忙碌，也不会影响transform的变化。</p>
-<p>&#x3D;&#x3D;在画一张图？？&#x3D;&#x3D;</p>
+<p><img src="https://gitee.com/mrjereky/picgo/raw/master/typora/interview/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B.png" alt="浏览器渲染过程"></p>
 <h2 id="2-浏览器主要组成部分？"><a href="#2-浏览器主要组成部分？" class="headerlink" title="2. 浏览器主要组成部分？"></a>2. 浏览器主要组成部分？</h2><ol>
 <li>用户界面<br>呈现窗口、地址栏、前进后退按钮、收藏夹等部件</li>
 <li>渲染引擎<br>解析HTML和CSS，渲染页面（也即是浏览器内核）</li>
@@ -353,7 +342,7 @@
 <script>
 	var yiliaConfig = {
 		fancybox: true,
-		mathjax: true,
+		mathjax: false,
 		animate: true,
 		isHome: false,
 		isPost: true,
@@ -367,26 +356,6 @@
 <script src="/js/main.js"></script>
 
 
-
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    }
-});
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
-</script>
-
-<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
 
 
   </div>
