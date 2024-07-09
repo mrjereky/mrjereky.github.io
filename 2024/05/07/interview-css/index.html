@@ -9,13 +9,15 @@
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="csscss 单位总结在css中，单位分为两大类：  绝对长度单位-px 相对长度单位：em，rem，vw，vh  em是相对于父元素字体大小；rem是相对于根元素字体大小  px 和 em 的区别？ px，即pixel像素，是相对于屏幕分辨率而言，是一个绝对单位，但具有一定的相对性。因为在同一设备上每个设备像素所代表的物理长度是固定不变的（绝对性），但在不同设备间每个想读多代表的物理长度是可以变">
+<meta property="og:type" content="article">
 <meta property="og:title" content="interview css">
 <meta property="og:url" content="https://mrjereky.github.io/2024/05/07/interview-css/index.html">
 <meta property="og:site_name" content="Interview">
+<meta property="og:description" content="csscss 单位总结在css中，单位分为两大类：  绝对长度单位-px 相对长度单位：em，rem，vw，vh  em是相对于父元素字体大小；rem是相对于根元素字体大小  px 和 em 的区别？ px，即pixel像素，是相对于屏幕分辨率而言，是一个绝对单位，但具有一定的相对性。因为在同一设备上每个设备像素所代表的物理长度是固定不变的（绝对性），但在不同设备间每个想读多代表的物理长度是可以变">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-05-07T05:56:50.000Z">
-<meta property="article:modified_time" content="2024-05-07T06:01:05.061Z">
+<meta property="article:published_time" content="2024-05-07T05:56:50.713Z">
+<meta property="article:modified_time" content="2024-06-18T12:33:05.689Z">
 <meta property="article:author" content="Mr Jereky">
 <meta property="article:tag" content="Interview">
 <meta name="twitter:card" content="summary">
@@ -153,7 +155,7 @@
   
     <div class="article-meta">
       <a href="/2024/05/07/interview-css/" class="article-date">
-  	<time datetime="2024-05-07T05:56:50.000Z" itemprop="datePublished">2024-05-07</time>
+  	<time datetime="2024-05-07T05:56:50.713Z" itemprop="datePublished">2024-05-07</time>
 </a>
     </div>
   
@@ -188,7 +190,391 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="css"><a href="#css" class="headerlink" title="css"></a>css</h1><h2 id="css-单位总结"><a href="#css-单位总结" class="headerlink" title="css 单位总结"></a>css 单位总结</h2><p>在css中，单位分为两大类：</p>
+<ol>
+<li>绝对长度单位-px</li>
+<li>相对长度单位：em，rem，vw，vh</li>
+</ol>
+<p><strong>em是相对于父元素字体大小；rem是相对于根元素字体大小</strong></p>
+<blockquote>
+<p>px 和 em 的区别？</p>
+<p>px，即pixel像素，是相对于屏幕分辨率而言，是一个绝对单位，但具有一定的相对性。因为在同一设备上每个设备像素所代表的物理长度是固定不变的（绝对性），但在不同设备间每个想读多代表的物理长度是可以变化的（相对性）。</p>
+<p>em 是相对长度单位，具体大小要相对于父元素来计算，例如父元素的字体大小是40px，那么子元素1em就代表字体大小和父元素一样为40px，而如果是0.5em就代表字体大小为父元素的一半，即20px。</p>
+</blockquote>
+<h2 id="居中方式总结"><a href="#居中方式总结" class="headerlink" title="居中方式总结"></a>居中方式总结</h2><ol>
+<li><p>使用绝对定位实现居中</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: pink;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.item</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: skyblue;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">margin-left</span>: -<span class="number">50px</span>;</span><br><span class="line">  <span class="attribute">margin-top</span>: -<span class="number">50px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>使用transform实现居中</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: pink;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.item</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: skyblue;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(-<span class="number">50%</span>, -<span class="number">50%</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>使用flex弹性盒子居中</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: pink;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: center; // 水平居中</span><br><span class="line">  <span class="attribute">align-items</span>: center; // 垂直居中</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.item</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: skyblue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>使用<code>vertical-align:middle</code>实现垂直居中</p>
+<p>前提是元素必须是<code>display:inline-block</code>，比较适用于img元素</p>
+<p>并且需要一个兄弟元素作为参照物，所以可以依靠给父元素添加一个伪元素<code>::before</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: pink;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.container</span><span class="selector-pseudo">::before</span>&#123;</span><br><span class="line">  <span class="attribute">content</span> : <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">  <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.item</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: skyblue;</span><br><span class="line">  <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="隐藏元素的方法"><a href="#隐藏元素的方法" class="headerlink" title="隐藏元素的方法"></a>隐藏元素的方法</h2><ol>
+<li><p>完全隐藏：元素从渲染树中消失，不占空间</p>
+<p>设置<code>display:none；</code></p>
+<p>直接在元素上添加<code>hidden</code>属性；</p>
+<p>两者等价</p>
+</li>
+<li><p>视觉上隐藏：屏幕中不可见，但是占据空间</p>
+<p>设置透明度为0，视觉上不可见<code>opacity:0</code></p>
+<p>设置<code>visibility：hidden</code></p>
+<p>设置定位或者外边距，使元素移除可视区域</p>
+<p>设置宽高为0，<code>overflow:hidden</code>，超出隐藏</p>
+<p>裁剪元素，设置clip-path属性，<code>clip-path: polygon(0px 0px,0px 0px,0px 0px,0px 0px);</code></p>
+</li>
+<li><p>语义上隐藏：读屏软件不可读，但是正常占据空间</p>
+<p>通过设置 <em>aria-hidden</em> 属性为 <em>true</em> 使读屏软件不可读，但是元素仍然占据空间并且可见。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="浮动"><a href="#浮动" class="headerlink" title="浮动"></a>浮动</h2><blockquote>
+<p>浮动属性的产生之初是为了实现“文字环绕”的效果。让文字环绕图片，从而使网页实现类似于word中的“图文混排”的效果。</p>
+</blockquote>
+<h3 id="浮动的特性"><a href="#浮动的特性" class="headerlink" title="浮动的特性"></a>浮动的特性</h3><ol>
+<li>脱离标准流</li>
+<li>浮动的元素相互贴靠</li>
+<li>宽度收缩</li>
+</ol>
+<h3 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h3><ol>
+<li><p>给浮动元素的父级元素设置高度，而且必须大于子元素高度</p>
+</li>
+<li><p><em>clear</em> 清除浮动（添加空 <em>div</em> 法）在浮动元素下方添加空 <em>div</em>，并给该元素写<em>css</em> 样式 <em>{clear:both;height:0;overflow:hidden;}</em></p>
+</li>
+<li><p>父级同时浮动（需要给父级同级元素添加浮动）</p>
+</li>
+<li><p>父级设置成 <em>inline-block</em>，其 <em>margin: 0 auto</em> 居中方式失效</p>
+</li>
+<li><p>给父级添加 <em>overflow:hidden</em> 清除浮动方法</p>
+</li>
+<li><p>伪类清除法：利用浮动元素的父元素的after伪元素清除浮动 (<strong>最常用</strong>)</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="selector-class">.clearfix</span><span class="selector-pseudo">::after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">clear</span>: both;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="定位总结"><a href="#定位总结" class="headerlink" title="定位总结"></a>定位总结</h2><p>一共5种定位方案，position属性如下：</p>
+<ul>
+<li><p><strong>static  静态定位</strong></p>
+<p>所谓静态定位，就是我们的标准流，是HTML元素的默认值，不受到top、bottom、left、right的影响。</p>
+</li>
+<li><p><strong>relative  相对定位</strong></p>
+<p>就是相对于自己原来位置进行定位，不脱离标准流。</p>
+</li>
+<li><p><strong>absolute  绝对定位</strong></p>
+<p>是相对于最近的有定位的元素进行偏移。会脱离标准流。</p>
+</li>
+<li><p><strong>fixed  固定定位</strong></p>
+<p>他是一种特殊的绝对定位，是相对于浏览器窗口进行定位，会脱离标准流。无论页面如何滚动，固定定位的盒子显示位置都是不会变化的。</p>
+</li>
+<li><p><strong>sticky  粘性定位</strong></p>
+<p>它是相对定位和固定定位的混合。元素在跨越特定阈值前是相对定位，之后是固定定位。</p>
+</li>
+</ul>
+<h2 id="BFC"><a href="#BFC" class="headerlink" title="BFC"></a>BFC</h2><blockquote>
+<p>全称为Block formatting contexts，翻译为：块级格式化上下文；</p>
+<p><strong>BFC 是一个独立的布局空间，BFC 内部的元素布局与外部互不影响</strong></p>
+</blockquote>
+<p><em>BFC</em> 的布局规则有如下几条：</p>
+<ol>
+<li>内部的 <em>Box</em> 会在垂直方向一个接着一个地放置。</li>
+<li><em>Box</em> 垂直方向上的距离由 <em>margin</em> 决定。属于同一个 <em>BFC</em> 的两个相邻的 <em>Box</em> 的 <em>margin</em> 会发生重叠。</li>
+<li>每个盒子的左外边框紧挨着包含块的左边框，即使浮动元素也是如此。</li>
+<li><em>BFC</em> 的区域不会与浮动 <em>Box</em> 重叠。</li>
+<li><em>BFC</em> 就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素，反之亦然。</li>
+<li>计算 <em>BFC</em> 的高度时，浮动子元素也参与计算。</li>
+</ol>
+<p><strong>实际上标准流中 body 元素就是一个天然的 BFC。</strong></p>
+<p>如果其他区域想要单独设置一个 BFC，该怎么办呢？</p>
+<p>常见方法：</p>
+<table>
+<thead>
+<tr>
+<th>元素或属性</th>
+<th>属性值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>根元素</td>
+<td></td>
+</tr>
+<tr>
+<td>float</td>
+<td>left、right</td>
+</tr>
+<tr>
+<td>position</td>
+<td>absolute、fixed</td>
+</tr>
+<tr>
+<td>overflow</td>
+<td>auto、scroll、hidden</td>
+</tr>
+<tr>
+<td>display</td>
+<td>inline-block、table-cell</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>完整的 BFC 触发方式可以参阅：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Block_formatting_context">https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Block_formatting_context</a></p>
+</blockquote>
+<p><strong>BFC用处，解决的一些问题</strong></p>
+<ol>
+<li>解决浮动元素令父元素高度塌陷问题</li>
+<li>非浮动元素被浮动元素覆盖</li>
+<li>外边距垂直方向重合的问题</li>
+</ol>
+<h2 id="css-属性的计算过程"><a href="#css-属性的计算过程" class="headerlink" title="css 属性的计算过程"></a>css 属性的计算过程</h2><blockquote>
+<p>属性值的计算过程是从没有属性值，到每个属性都有值的一个过程。</p>
+</blockquote>
+<p>css 属性值的计算顺序有四步</p>
+<ol>
+<li>确定声明值： 参考样式表中没有冲突的声明，作为css 属性值；</li>
+<li>层叠冲突： 对样式表中有冲突的声明使用层叠规则，确定CSS属性值；</li>
+<li>使用继承： 对仍然没有值的属性，看是否可以继承父元素的值；</li>
+<li>使用默认值： 最后还没有值的属性，全部使用默认属性值；</li>
+</ol>
+<h2 id="层叠冲突规则"><a href="#层叠冲突规则" class="headerlink" title="层叠冲突规则"></a>层叠冲突规则</h2><ol>
+<li>重要性： 作者声明表比浏览器默认样式表更重要</li>
+<li>特殊性（专用性）： 权重问题</li>
+<li>源次序： css样式后面会覆盖前面的</li>
+</ol>
+<h2 id="CSS-引用的方式"><a href="#CSS-引用的方式" class="headerlink" title="CSS 引用的方式"></a>CSS 引用的方式</h2><blockquote>
+<p>使用link标签链接外部样式表；</p>
+<p>@import可以引入外部样式表；</p>
+</blockquote>
+<p><strong>import指令用法</strong></p>
+<ol>
+<li>html文件中导入外部样式</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">  <span class="keyword">@import</span> url(<span class="string">&#x27;./index.css&#x27;</span>);</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>CSS文件中引入另一个CSS文件</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@import</span> url(<span class="string">&#x27;./index.css&#x27;</span>);</span><br><span class="line"><span class="comment">/* 后面书写其他样式 */</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>还可以在媒体查询中使用</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@import</span> <span class="string">&quot;printstyle.css&quot;</span> print;</span><br><span class="line"><span class="comment">/* 只在媒体为 print 时导入 &quot;printstyle.css&quot; 样式表 */</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@import</span> <span class="string">&quot;mobstyle.css&quot;</span> screen <span class="keyword">and</span> (<span class="attribute">max-width</span>: <span class="number">768px</span>);</span><br><span class="line"><span class="comment">/* 只在媒体为 screen 且视口最大宽度 768 像素时导入 &quot;mobstyle.css&quot; 样式表 */</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>link和@import的区别</strong></p>
+<ol>
+<li><p><strong>link属于HTML标签，@import完全是CSS提供的一种方式</strong></p>
+<p><em>link</em> 标签除了可以加载 <em>CSS</em> 外，还可以做很多其它的事情，比如定义 <em>RSS</em>，定义 <em>rel</em> 连接属性等，*@import* 就只能加载 <em>CSS</em> 了。</p>
+</li>
+<li><p><strong>加载顺序的差别</strong></p>
+<p>比如，在 <em>a.css</em> 中使用 <em>import</em> 引用 <em>b.css</em>，只有当使用当使用 <em>import</em> 命令的宿主 <em>css</em> 文件 <em>a.css</em> 被下载、解析之后，浏览器才会知道还有另外一个 <em>b.css</em> 需要下载，这时才去下载，然后下载后开始解析、构建 <em>render tree</em> 等一系列操作.</p>
+</li>
+<li><p><strong>兼容性的差别</strong></p>
+<p>由于 <em>@import</em> 是 <em>CSS2.1</em> 提出的所以老的浏览器不支持，*@import* 只有在 <em>IE5</em> 以上的才能识别，而 <em>link</em> 标签无此问题。</p>
+</li>
+<li><p><strong>当使用JS控制DOM去改变样式的时候，只能使用link标签，因为@import不是DOM可以控制的</strong></p>
+<p>对于可换皮肤的网站而言，可以通过改变 <em>link</em> 标签这两个的 <em>href</em> 值来改变应用不用的外部样式表，但是对于 <em>import</em> 是无法操作的，毕竟不是标签。</p>
+</li>
+</ol>
+<p><em><strong>另外，从性能优化的角度来讲，尽量要避免使用 @import。</strong></em></p>
+<h2 id="CSS-的计算属性"><a href="#CSS-的计算属性" class="headerlink" title="CSS 的计算属性"></a>CSS 的计算属性</h2><p>calc()函数，calculate（计算）的缩写。</p>
+<p>可以用在任何长度、数值、时间、角度、频率等处，语法如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="built_in">calc</span>(<span class="number">100%</span> - <span class="number">100px</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>主要用于指定元素的长度，支持所有的CSS长度单位。</strong></p>
+<h2 id="媒介查询（media）"><a href="#媒介查询（media）" class="headerlink" title="媒介查询（media）"></a>媒介查询（media）</h2><blockquote>
+<p>全称 Media Query，意为查询用户所使用的媒体或媒介。</p>
+</blockquote>
+<p><strong>Media type 设备类型</strong></p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>设备类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>All</td>
+<td>所有设备</td>
+</tr>
+<tr>
+<td>Braille</td>
+<td>盲人用点字法触觉回馈设备</td>
+</tr>
+<tr>
+<td>Embossed</td>
+<td>盲文打印机</td>
+</tr>
+<tr>
+<td>Handheld</td>
+<td>便携设备</td>
+</tr>
+<tr>
+<td>Print</td>
+<td>打印用纸或打印预览视图</td>
+</tr>
+<tr>
+<td>Projection</td>
+<td>各种投影设备</td>
+</tr>
+<tr>
+<td>Screen</td>
+<td>电脑显示器</td>
+</tr>
+<tr>
+<td>Speech</td>
+<td>语音或音频合成器</td>
+</tr>
+<tr>
+<td>Tv</td>
+<td>电视机类型设备</td>
+</tr>
+<tr>
+<td>Tty</td>
+<td>使用固定密度字母栅格的媒介，比如电传打字机和终端</td>
+</tr>
+</tbody></table>
+<p>常用的也就是 <em>all</em>（全部）、<em>screen</em>（屏幕）和 <em>print</em>（页面打印或打印预览模式）这三种媒体类型。</p>
+<p><strong>媒体类型引用方式</strong></p>
+<ol>
+<li>link</li>
+</ol>
+<p>通过 <em>link</em> 标签中的 <em>media</em> 属性来指定不同的媒体类型，如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;index<span class="selector-class">.css</span>&quot; media=&quot;screen&quot; /&gt;</span><br><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;print<span class="selector-class">.css</span>&quot; media=&quot;print&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li>xml方式</li>
+</ol>
+<p><em>xml</em> 方式和 <em>link</em> 方式比较相似，也是通过 <em>media</em> 属性来指定，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;? xml-stylesheet rel=&quot;stylesheet&quot; media=&quot;screen&quot; href=&quot;style.css&quot; ?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>@import</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@import</span> url(<span class="string">&#x27;./index.css&#x27;</span>) screen</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="4">
+<li>@media</li>
+</ol>
+<p><em>@media</em> 是 <em>CSS3</em> 中新引进的一个特性，称为媒体查询。*@media* 引入媒体也有两种方式，如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@media</span> screen&#123;</span><br><span class="line">  <span class="comment">/* 具体样式 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>最常见的就是第 <em>1</em> 种和第 <em>4</em> 种</strong>。</p>
+<p><strong>媒体查询的具体语法</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Media Type（判断条件）+ CSS（符合条件的样式规则）</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>使用媒体查询实现视口宽度大于320px，小于640px时div元素的宽度变成30%</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">min-width</span>: <span class="number">320px</span>) <span class="keyword">and</span> (<span class="attribute">max-width</span>: <span class="number">640px</span>) &#123;</span><br><span class="line">  <span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">30%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="CSS3-过渡（transition）"><a href="#CSS3-过渡（transition）" class="headerlink" title="CSS3 过渡（transition）"></a>CSS3 过渡（transition）</h2><p>举例：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: skyblue;</span><br><span class="line">  <span class="attribute">transition</span>: all .<span class="number">5s</span>;</span><br><span class="line">  <span class="comment">/* 添加过渡效果 */</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>transition 的包含的属性</strong></p>
+<ul>
+<li>transition-property：指定过渡的CSS属性</li>
+<li><em>transition-duration</em>：指定过渡所需的完成时间</li>
+<li><em>transition-timing-function</em>：指定过渡函数（设置过渡速度）</li>
+<li><em>transition-delay</em>：指定过渡的延迟时间</li>
+</ul>
+<p><strong>过渡事件</strong></p>
+<p>transitionend事件方便我们监听过渡效果是否结束</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> div = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;oDiv&quot;</span>);</span><br><span class="line">div.<span class="property">onclick</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  div.<span class="property">style</span>.<span class="property">height</span> = <span class="string">&quot;400px&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">div.<span class="property">ontransitionend</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;过渡结束后触发&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="CSS3-动画"><a href="#CSS3-动画" class="headerlink" title="CSS3 动画"></a>CSS3 动画</h2><p>示例：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">*&#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: skyblue;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">animation</span>: test <span class="number">5s</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@keyframes</span> test&#123;</span><br><span class="line">  <span class="number">0%</span> &#123;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">25%</span> &#123;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">400px</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">40%</span> &#123;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">400px</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">200px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">65%</span> &#123;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">200px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">100%</span> &#123;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>制作动画包含两个部分：首先是关键帧声明一个动画，其次是在animation调用关键帧声明动画</p>
+<p><strong>声明动画</strong></p>
+<p>使用@keyframes声明一个动画：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@keyframes</span> animationName &#123;keyframes-selector &#123;css-styles;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用动画</strong></p>
+<p>通过animation属性调用动画</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">animation</span>: name duration timing-function delay iteration-count direction fill-mode play-state;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><em>animation-name</em>：指定要绑定到选择器的关键帧的名称</li>
+<li><em>animation-duration</em>：动画指定需要多少秒或毫秒完成</li>
+<li><em>animation-timing-function</em>：设置动画将如何完成一个周期</li>
+<li><em>animation-delay</em>：设置动画在启动前的延迟间隔</li>
+<li><em>animation-iteration-count</em>：定义动画的播放次数</li>
+<li><em>animation-direction</em>：指定是否应该轮流反向播放动画</li>
+<li><em>animation-fill-mode</em>：规定当动画不播放时（当动画完成时，或当动画有一个延迟未开始播放时），要应用到元素的样式</li>
+<li><em>animation-play-state</em>：指定动画是否正在运行或已暂停</li>
+</ul>
+<p><strong>动画事件</strong></p>
+<ul>
+<li><em>animationstart</em>：<em>CSS</em> 动画开始后触发</li>
+<li><em>animationiteration</em>：<em>CSS</em> 动画重复播放时触发</li>
+<li><em>animationend</em>：<em>CSS</em> 动画完成后触发</li>
+</ul>
+<h2 id="渐进增强、优雅降级"><a href="#渐进增强、优雅降级" class="headerlink" title="渐进增强、优雅降级"></a>渐进增强、优雅降级</h2><p><strong>渐进增强</strong></p>
+<p>英文是 progressive enhancement， 指的是针对低版本浏览器进行构建页面，保证基本功能，然后针对高版本浏览器进行效果、交互等改进和追加功能达到更好的用户体验。</p>
+<p><strong>优雅降级</strong></p>
+<p>英文是 <em>graceful degradation</em>， 一开始构建完整的功能，然后针对低版本浏览器进行兼容。</p>
+<h2 id="CSS3-变形"><a href="#CSS3-变形" class="headerlink" title="CSS3 变形"></a>CSS3 变形</h2><p>偏移、缩放、旋转、倾斜、矩阵</p>
+<h2 id="渐进式渲染"><a href="#渐进式渲染" class="headerlink" title="渐进式渲染"></a>渐进式渲染</h2><blockquote>
+<p>渐进式渲染，英文全称 <em>progressive rendering</em>，也被称之为惰性渲染，指的是为了提高用户感知的加载速度，以尽快的速度来呈现页面的技术。</p>
+</blockquote>
+<p>这不是指的某一项技术，而是各种技术的一种集合。</p>
+<p>例如：</p>
+<p><strong>骨架屏</strong></p>
+<p>在加载网络数据时，为了提升用户体验，通常会使用一个转圈圈的 <em>loading</em> 动画，或者使用 <em>Skeleton Screen</em> 占位。相比与 <em>loading</em> 动画，<em>Skeleton Screen</em> 的效果要更生动</p>
+<p><strong>图片懒加载</strong></p>
+<p>所谓图片懒加载，顾名思义，就是先加载部分图片，剩余的图片等到需要的时候再加载。这在电商网站中尤其常见。</p>
+<p><strong>图片占位符</strong></p>
+<p>在网页加载的时候，某些图片还在请求中或者还未请求，这个时候就先找一个临时代替的图像，放在最终图像的位置上，但是这只是临时替代的图形，当图片数据准备好以后，会重新渲染真正的图形数据。</p>
+<p><strong>拆分网页资源</strong></p>
+<p>大部分用户不会用到一个网站的所有页面，但我们通常的做法却是把所有的功能都打包进一个很大的文件里面。一个 <em>bundle.js</em> 文件的大小可能会有几  <em>M</em>，一个打包后的  <em>style.css</em>  会包含网站的一切样式，从  <em>CSS</em>  结构定义到网站在各个版本的样式：移动端、平板、桌面、打印版等等。</p>
+<p>但用户并不是一开始就需要所有的资源，所有我们可以对资源进行拆分，首先加载那些关键的资源，其他的资源等到需要的时候再去加载它。</p>
+<p>更多的关于渐进式渲染的内容，可以参阅 <em>MDN</em>：<em><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/Progressive_web_apps/Loading">https://developer.mozilla.org/zh-CN/docs/Web/Progressive_web_apps/Loading</a></em></p>
+<h2 id="CSS渲染性能优化"><a href="#CSS渲染性能优化" class="headerlink" title="CSS渲染性能优化"></a>CSS渲染性能优化</h2><ol>
+<li>使用id选择器非常的高效，因为id是唯一的</li>
+<li>避免深层次的选择器嵌套</li>
+<li>尽量避免使用属性选择器，因为匹配速度慢</li>
+<li>使用渐进增强的方案</li>
+<li>遵守CSSLint规则</li>
+<li>不使用@import指令导入css样式</li>
+<li>避免过分的重排（reflow）</li>
+<li>依赖继承</li>
+<li>值缩写</li>
+<li>避免耗性能的属性</li>
+<li>背景图优化合并</li>
+<li>文件压缩</li>
+</ol>
+<h2 id="堆叠上下文"><a href="#堆叠上下文" class="headerlink" title="堆叠上下文"></a>堆叠上下文</h2><h2 id="CSS3遮罩"><a href="#CSS3遮罩" class="headerlink" title="CSS3遮罩"></a>CSS3遮罩</h2>
       
     </div>
     

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>事件循环 | Interview</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="浏览器的进程模型进程程序运行需要有它自己的内存空间，可以把这块内存空间简单理解为进程。 每个应用至少有一个进程，进程之间是相互独立的。即使要通信，也要双方同意。 线程有了进程就可以运行代码了 运行代码的「人」称之为「线程」。 一个进程至少有一个线程。 在进程开启后会自动创建一个线程来运行代码，该线程称之为主线程。 「主线程」结束啦，该程序就结束啦。 如果程序需要同时执行多块代码，主线程会启动更多的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事件循环">
+<meta property="og:url" content="https://mrjereky.github.io/2024/06/06/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/index.html">
+<meta property="og:site_name" content="Interview">
+<meta property="og:description" content="浏览器的进程模型进程程序运行需要有它自己的内存空间，可以把这块内存空间简单理解为进程。 每个应用至少有一个进程，进程之间是相互独立的。即使要通信，也要双方同意。 线程有了进程就可以运行代码了 运行代码的「人」称之为「线程」。 一个进程至少有一个线程。 在进程开启后会自动创建一个线程来运行代码，该线程称之为主线程。 「主线程」结束啦，该程序就结束啦。 如果程序需要同时执行多块代码，主线程会启动更多的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mrjereky.github.io/assets/image/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97.png">
+<meta property="og:image" content="https://mrjereky.github.io/assets/image/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/%E5%BC%82%E6%AD%A5.png">
+<meta property="og:image" content="https://mrjereky.github.io/assets/image/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/%E5%BC%82%E6%AD%A52.png">
+<meta property="og:image" content="https://mrjereky.github.io/assets/image/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/%E6%B8%B2%E6%9F%93%E9%98%BB%E5%A1%9E%E4%BB%A3%E7%A0%81.png">
+<meta property="og:image" content="https://mrjereky.github.io/assets/image/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B.png">
+<meta property="article:published_time" content="2024-06-06T06:23:35.273Z">
+<meta property="article:modified_time" content="2024-06-18T12:55:57.590Z">
+<meta property="article:author" content="Mr Jereky">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mrjereky.github.io/assets/image/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Interview" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/wy.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+
+  
+<script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+
+  
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				<img lazy-src="/img/avatar.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+			<h1 class="header-author"><a href="/">Mr Jereky</a></h1>
+		</hgroup>
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">Home</a></li>
+				        
+							<li><a href="/archives">Archives</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="half-header-menu">
+						<a class="hide">Home</a>
+						<a>Tags</a>
+						<a>Links</a>
+						<a>About</a>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+						<!-- music -->
+						
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 20px;">Interview</a> <a href="/tags/browser/" style="font-size: 10px;">browser</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/network/" style="font-size: 10px;">network</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/" style="font-size: 10px;">工程化</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 10px;">浏览器</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">网络</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/">github</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">I&#39;m a developer.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide"></h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/avatar.png" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author"></h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">Home</a></li>
+		        
+					<li><a href="/archives">Archives</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-事件循环" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2024/06/06/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" class="article-date">
+  	<time datetime="2024-06-06T06:23:35.273Z" itemprop="datePublished">2024-06-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      事件循环
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="浏览器的进程模型"><a href="#浏览器的进程模型" class="headerlink" title="浏览器的进程模型"></a>浏览器的进程模型</h2><h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>程序运行需要有它自己的内存空间，可以把这块内存空间简单理解为进程。</p>
+<p>每个应用至少有一个进程，进程之间是相互独立的。即使要通信，也要双方同意。</p>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>有了进程就可以运行代码了</p>
+<p>运行代码的「人」称之为「线程」。</p>
+<p>一个进程至少有一个线程。</p>
+<p>在进程开启后会自动创建一个线程来运行代码，该线程称之为主线程。</p>
+<p>「主线程」结束啦，该程序就结束啦。</p>
+<p>如果程序需要同时执行多块代码，主线程会启动更多的线程执行代码，所以一个进程中包含多个线程。</p>
+<h3 id="浏览器有哪些进程和线程"><a href="#浏览器有哪些进程和线程" class="headerlink" title="浏览器有哪些进程和线程"></a>浏览器有哪些进程和线程</h3><p><strong>浏览器是一个多进程多线程的应用程序</strong></p>
+<p>为了避免相互影响，为了减少连环崩坏的几率，当启动浏览器后会自动启动多个进程。</p>
+<blockquote>
+<p>可以在浏览器任务管理器中查看当前的进程</p>
+</blockquote>
+<p>主要的进程：</p>
+<ul>
+<li><p>浏览器进程</p>
+<p>主要负责界面的显示，用户交互（页面刷新，前进后退，等工具栏），子进程管理等。浏览器进程内部会启动多个线程处理不同的任务</p>
+</li>
+<li><p>网络进程</p>
+<p>负责网络资源加载，网络进程内部会启动多个线程来处理不同的网络任务</p>
+</li>
+<li><p>渲染进程</p>
+<p>渲染进程启动后，会开启一个<strong>渲染主线程</strong>，主线程负责执行 HTML、CSS、JS代码。<br>默认情况下浏览器会为每个标签页开启一个新的渲染进程，以保证不同标签之间不会相互影响</p>
+<blockquote>
+<p>将来该默认模式可能有所改变，可参考chrome官方说明文档</p>
+</blockquote>
+</li>
+<li><p>……</p>
+</li>
+</ul>
+<h2 id="渲染主线程如何工作"><a href="#渲染主线程如何工作" class="headerlink" title="渲染主线程如何工作"></a>渲染主线程如何工作</h2><p><strong>渲染主线程</strong>是浏览器中最繁忙的线程，需要处理的任务包括但不限于：</p>
+<ul>
+<li>解析 HTML</li>
+<li>解析 CSS</li>
+<li>计算样式</li>
+<li>布局</li>
+<li>处理图层</li>
+<li>每秒把页面画60次</li>
+<li>执行全局JS代码</li>
+<li>执行事件处理函数</li>
+<li>执行计时器的回调函数</li>
+<li>……</li>
+</ul>
+<blockquote>
+<p>渲染进程不适用多个线程来处理这些事</p>
+</blockquote>
+<p>要处理这么多的任务，主线程遇到一个前所未有的难题：如何调度任务？</p>
+<p>比如：</p>
+<ul>
+<li>我正在执行一个JS函数，执行到一半的时候用户点击了按钮，我该立即去执行的点击事件处理函数吗？</li>
+<li>我正在执行一个JS函数，执行到一半的时候某个定时器到时间了，我该立即去执行它的回调函数？</li>
+<li>浏览器被用户点击了，同时定时器到时间了，该处理哪一个？</li>
+<li>……</li>
+</ul>
+<p><strong>渲染主线程</strong>想出来一个绝妙的主意来处理这个问题： <strong>排队</strong></p>
+<p><img src="/./assets/image/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97.png" alt="消息队列"></p>
+<ol>
+<li>在最开始的时候，渲染主线程会进入一个无限循环</li>
+<li>每一次循环会检查消息队列中是否有任务存在，如果有，就取出第一个任务执行，执行完一个后进入下一次循环，如果没有，则进入休眠状态</li>
+<li>其他所有线程（包括其他进程的线程）可以随时的向消息队列添加任务。新任务会添加到消息队列的末尾。在添加新任务时，如果主线程是休眠状态，则会将其唤醒以继续循环拿取任务</li>
+</ol>
+<p>这样一来，就可以让每个任务有条不紊，持续的进行下去。</p>
+<p>整个过程称之为<strong>事件循环（消息循环）</strong></p>
+<h2 id="相关解释"><a href="#相关解释" class="headerlink" title="相关解释"></a>相关解释</h2><h3 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h3><p>代码在执行过程中，会遇到一些无法立即处理的任务，比如：</p>
+<ul>
+<li>计时器完成后需要执行的任务 —— <code>setTimeout</code>、<code>setInterval</code></li>
+<li>网络通信完成后需要执行的任务 —— <code>XHR</code>、<code>Fetch</code></li>
+<li>用户操作后需要执行的任务 —— <code>addEventListener</code></li>
+</ul>
+<p>如果让渲染主线程等待这些任务的时机达到，就会导致主线程长期处于「阻塞」的状态，从而导致浏览器「卡死」</p>
+<p><img src="/./assets/image/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/%E5%BC%82%E6%AD%A5.png"></p>
+<p><strong>渲染主线程承担着及其重要的工作，无论如何都不能阻塞！</strong></p>
+<p>因此，浏览器选择<strong>异步</strong>来解决这个问题</p>
+<p><img src="/./assets/image/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/%E5%BC%82%E6%AD%A52.png"></p>
+<p>使用异步的方式，<strong>渲染线程永不阻塞</strong></p>
+<blockquote>
+<p>如何理解 JS 的异步？</p>
+<p>JS是一门单线程语言，这是因为它运行在浏览器渲染主线程中，而渲染主线程只有一个。</p>
+<p>而渲染主线程承担着诸多任务，渲染页面、执行JS都在其中。</p>
+<p>如果使用同步的方式，就极有可能导致主线程产生阻塞，从而导致消息队列中很多任务无法得到执行。</p>
+<p>这样一来，一方面会导致繁忙的主线程白白消耗时间，另一方面导致页面无法及时更新，给用户造成卡死现象。</p>
+<p>所以浏览器采用异步的方式避免的。具体做法是当任务发生时，比如计时器、网络、事件监听，主线程将任务交给其他线程处理，自身立即结束任务的执行，转而执行后续代码。当其他线程完成时，将事先传递的回调函数包装成任务，加入消息队列中末尾排队，等待主线程调度执行。</p>
+<p>在这种异步模式下，浏览器用不阻塞，从而最大限度的保证了单线程的流畅运行。</p>
+</blockquote>
+<h3 id="JS为何会阻塞渲染"><a href="#JS为何会阻塞渲染" class="headerlink" title="JS为何会阻塞渲染"></a>JS为何会阻塞渲染</h3><p>渲染阻塞代码</p>
+<p><img src="/./assets/image/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/%E6%B8%B2%E6%9F%93%E9%98%BB%E5%A1%9E%E4%BB%A3%E7%A0%81.png" alt="渲染阻塞代码"></p>
+<p>渲染和执行JS，都在渲染主线程上<br>所以，重新渲染，绘制页面，需要在消息队列中添加绘制任务。</p>
+<h3 id="任务没有优先级"><a href="#任务没有优先级" class="headerlink" title="任务没有优先级"></a>任务没有优先级</h3><p>任务没有优先级，在消息队列中先进先出</p>
+<p>但是在<strong>消息队列是有优先级的</strong></p>
+<p>根据W3C的解释：</p>
+<ul>
+<li>每个任务都有一个任务类型，同一个类型的任务必须在一个队列中，不同类型的任务可以属于不同的队列。在一次事件循环中，浏览器可以根据实际情况从不同的队列中取出任务执行。</li>
+<li>浏览器必须做好一个微队列，微队列中的任务优先所有其他任务执行。<br><a target="_blank" rel="noopener" href="https://html.spec.whatwg.org/multipage/webappapis.html#perform-a-microtask-checkpoint">https://html.spec.whatwg.org/multipage/webappapis.html#perform-a-microtask-checkpoint</a></li>
+</ul>
+<blockquote>
+<p>随着浏览器的复杂度急剧提升，W3C 不在使用宏任务队列的说法</p>
+</blockquote>
+<p>目前chrome的实现中，至少包括下列任务：</p>
+<ul>
+<li>延时队列：用于存放计时器到达后的回调任务，优先级「中」</li>
+<li>交互队列：用于存放用户操作后产生的时间处理任务，优先级「高」</li>
+<li>微队列：用户存放需要最快执行的任务，优先级「最高」</li>
+</ul>
+<blockquote>
+<p>添加任务到微队列的主要方式是使用 Promise、MutationObserver</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 立即把一个函数添加到微队列</span></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">resolve</span>().<span class="title function_">then</span>(函数)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/./assets/image/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B.png" alt="事件循环完整流程"></p>
+<h2 id="阐述JS的事件循环"><a href="#阐述JS的事件循环" class="headerlink" title="阐述JS的事件循环"></a>阐述JS的事件循环</h2><p>事件循环又叫做消息循环，是浏览器渲染主线程的工作方式。</p>
+<p>在Chrome的源码中，他开启了一个不会结束的for循环，每次循环从消息队列中取出第一个任务执行，而其他线程只需要在合适的时候将任务加入到队列末尾即可。</p>
+<p>过去把消息队列简单的分为宏队列和微队列，这种说法目前已经无法满足复杂的浏览器环境，取而代之的是一种更加灵活多变的处理方式。</p>
+<p>根据W3C官方的解释，每个任务有不同的类型，同类型的任务必须在同一个队列，不同的任务可以属于不同的队列。不同的任务队列又不同的优先级，在一次事件循环中，由浏览器自行决定取哪一个队列的任务。但是浏览器必须有一个微队列，微队列的任务一定具有最高的优先级，必须优先调度执行。</p>
+<h2 id="JS中的计时器能做到精确计时吗"><a href="#JS中的计时器能做到精确计时吗" class="headerlink" title="JS中的计时器能做到精确计时吗"></a>JS中的计时器能做到精确计时吗</h2><p>不可以</p>
+<ol>
+<li>计算机硬件没有原子钟，无法做到精确计时</li>
+<li>操作系统的计时函数本身就有少量偏差，由于JS的计时器最终调用的时操作系统的函数，也就携带了这些偏差</li>
+<li>按照W3C的标准，浏览器实现计时器时，如果嵌套超过5层，则会带有4毫秒的最少时间，这样在计时时间少于4毫秒时又带来了偏差</li>
+<li><strong>受事件循环的影响，计时器的回调函数只能在渲染主线程空闲时运行，因此又带来了偏差</strong></li>
+</ol>
+<p><strong>单线程是异步产生的原因</strong></p>
+<p><strong>事件循环时异步的实现方式</strong></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/05/07/interview-browser/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">interview browser</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2024 Mr Jereky
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/preccrep/hexo-theme-jelly" target="_blank">Jelly</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<script src="/js/main.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
