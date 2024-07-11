@@ -9,15 +9,15 @@
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. MVVM 的理解？MVVM是一种设计思想，Model-View-viewModel。 Model层代表数据模型，指后台数据，可以在model中定义数据的修改和操作业务的逻辑。 view层代表UI视图，指我们能看见的所有页面，将数据转换成UI展示出来。 view和model之间没有直接联系，而是通过viewModel进行交互。model数据变化会立即反应到view上，view数据的变化也会同步">
+  <meta name="description" content="VueMVVM 的理解 ⭐MVVM是一种设计思想，Model-View-viewModel。 Model层代表数据模型，指后台数据，可以在model中定义数据的修改和操作业务的逻辑。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="interview vue">
 <meta property="og:url" content="https://mrjereky.github.io/2024/05/07/interview-vue/index.html">
 <meta property="og:site_name" content="Jereky 的博客">
-<meta property="og:description" content="1. MVVM 的理解？MVVM是一种设计思想，Model-View-viewModel。 Model层代表数据模型，指后台数据，可以在model中定义数据的修改和操作业务的逻辑。 view层代表UI视图，指我们能看见的所有页面，将数据转换成UI展示出来。 view和model之间没有直接联系，而是通过viewModel进行交互。model数据变化会立即反应到view上，view数据的变化也会同步">
+<meta property="og:description" content="VueMVVM 的理解 ⭐MVVM是一种设计思想，Model-View-viewModel。 Model层代表数据模型，指后台数据，可以在model中定义数据的修改和操作业务的逻辑。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-07T05:56:08.000Z">
-<meta property="article:modified_time" content="2024-05-28T02:39:03.118Z">
+<meta property="article:modified_time" content="2024-07-11T06:06:48.563Z">
 <meta property="article:author" content="Mr Jereky">
 <meta property="article:tag" content="Interview">
 <meta property="article:tag" content="vue">
@@ -191,12 +191,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1-MVVM-的理解？"><a href="#1-MVVM-的理解？" class="headerlink" title="1. MVVM 的理解？"></a>1. MVVM 的理解？</h2><p>MVVM是一种设计思想，Model-View-viewModel。</p>
+        <meta name="referrer" content="no-referrer" />
+
+
+
+<h1 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h1><h2 id="MVVM-的理解-⭐"><a href="#MVVM-的理解-⭐" class="headerlink" title="MVVM 的理解 ⭐"></a>MVVM 的理解 ⭐</h2><p>MVVM是一种设计思想，Model-View-viewModel。</p>
 <p>Model层代表数据模型，指后台数据，可以在model中定义数据的修改和操作业务的逻辑。</p>
+<span id="more"></span>
+
 <p>view层代表UI视图，指我们能看见的所有页面，将数据转换成UI展示出来。</p>
 <p>view和model之间没有直接联系，而是通过viewModel进行交互。model数据变化会立即反应到view上，view数据的变化也会同步到model中。</p>
 <p>viewModel通过双向数据绑定，将view和model连接起来，view和model之间同步完全是自动的。<br>开发者只需要关注业务逻辑，不需要关注数据状态的同步问题。</p>
-<h2 id="2-vue-双向数据绑定原理？"><a href="#2-vue-双向数据绑定原理？" class="headerlink" title="2. vue 双向数据绑定原理？"></a>2. vue 双向数据绑定原理？</h2><h2 id="3-数据响应式原理？"><a href="#3-数据响应式原理？" class="headerlink" title="3. 数据响应式原理？"></a>3. 数据响应式原理？</h2><h2 id="4-v-model-双向绑定原理？"><a href="#4-v-model-双向绑定原理？" class="headerlink" title="4. v-model 双向绑定原理？"></a>4. v-model 双向绑定原理？</h2><p>v-model是一个语法糖。它会生成一个属性和一个事件。一般作用于表单元素或自定义组件。</p>
+<h2 id="Vue-双向数据绑定原理-⭐"><a href="#Vue-双向数据绑定原理-⭐" class="headerlink" title="Vue 双向数据绑定原理 ⭐"></a>Vue 双向数据绑定原理 ⭐</h2><p>Vue2中使用数据劫持结合发布订阅模式（pubSub模式）的方式</p>
+<h2 id="3-数据响应式原理？"><a href="#3-数据响应式原理？" class="headerlink" title="3. 数据响应式原理？"></a>3. 数据响应式原理？</h2><h2 id="4-v-model-双向绑定原理？"><a href="#4-v-model-双向绑定原理？" class="headerlink" title="4. v-model 双向绑定原理？"></a>4. v-model 双向绑定原理？</h2><p>v-model是一个语法糖。它会生成一个属性和一个事件。一般作用于表单元素或自定义组件。</p>
 <p>以输入框为例，当用户输入内容时，会触发input事件，从而更新value；当value改变同样会更新视图。</p>
 <h2 id="5-虚拟DOM？"><a href="#5-虚拟DOM？" class="headerlink" title="5. 虚拟DOM？"></a>5. 虚拟DOM？</h2><p>首先虚拟dom是一个JS对象，描述视图结构，主要解决了渲染效率问题</p>
 <p>vue组件都有一个render函数，每个render函数都会返回一个虚拟dom树<br>组件首次渲染，先生成虚拟dom树，然后根据虚拟dom创建真实的dom树，最后将真实dom树挂载到页面合适位置。<br>当响应式数据变化，重新渲染页面，render会生成新的虚拟dom树，然后进行dom树对比，只更新必要的真实dom，以达到最小的改动。</p>

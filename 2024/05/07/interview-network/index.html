@@ -17,7 +17,7 @@
 <meta property="og:description" content="网络同源策略 ⭐所谓同源：协议、主机、端口号都相同的地址。 同源策略是指：当前页面在运行过程中发送的网络请求，必须时同源的，否则就会被认为是跨域请求。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-07T05:55:44.000Z">
-<meta property="article:modified_time" content="2024-07-10T10:14:36.902Z">
+<meta property="article:modified_time" content="2024-07-10T15:51:42.027Z">
 <meta property="article:author" content="Mr Jereky">
 <meta property="article:tag" content="Interview">
 <meta property="article:tag" content="网络">
@@ -201,29 +201,70 @@
 <span id="more"></span>
 
 <p>浏览器中有一些不受同源策略限制的标签：<code>script</code>、<code>img</code>、<code>link</code></p>
-<p>所有可以通过script不受同源策略影响可以解决一部分跨域问题（JSONP）</p>
+<p>所有可以通过script不受同源策略影响可以解决一部分跨域问题（jsonp）</p>
 <blockquote>
 <p>同源策略是浏览器行为，为了保护本地数据不会被JS代码获取回来的数据污染，因此拦截的是客户端发出请求回来的数据接受，</p>
 <p>即客户端发送了请求，服务器响应了数据，但是无法被浏览器接收</p>
 </blockquote>
-<h2 id="2-跨域解决办法"><a href="#2-跨域解决办法" class="headerlink" title="2. 跨域解决办法"></a>2. 跨域解决办法</h2><h2 id="3-TCP-连接过程？"><a href="#3-TCP-连接过程？" class="headerlink" title="3. TCP 连接过程？"></a>3. TCP 连接过程？</h2><h2 id="4-如何实现Token加密？"><a href="#4-如何实现Token加密？" class="headerlink" title="4. 如何实现Token加密？"></a>4. 如何实现Token加密？</h2><h2 id="5-网络的五层模型？"><a href="#5-网络的五层模型？" class="headerlink" title="5. 网络的五层模型？"></a>5. 网络的五层模型？</h2><h2 id="6-get、post-的区别？"><a href="#6-get、post-的区别？" class="headerlink" title="6. get、post 的区别？"></a>6. get、post 的区别？</h2><p>两者的区别主要是浏览器默认行为导致的</p>
+<h2 id="跨域解决办法-⭐⭐⭐"><a href="#跨域解决办法-⭐⭐⭐" class="headerlink" title="跨域解决办法 ⭐⭐⭐"></a>跨域解决办法 ⭐⭐⭐</h2><p><strong>jsonp</strong></p>
+<p>原理：准备一个自定义函数接收服务器数据，然后生成一个<code>script</code>标签，<code>scr</code>属性指向跨域站点，同时路径中需要添加准备的自定义函数作为回调函数</p>
+<p>缺点：只支持GET请求</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建 script 标签</span></span><br><span class="line"><span class="keyword">var</span> script = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;script&quot;</span>);</span><br><span class="line"><span class="comment">// 设置scr指向跨域站点，并带有一个callback回调函数</span></span><br><span class="line">script.<span class="property">src</span> = <span class="string">&quot;http://127.0.0.1:8888/index.html?callback=jsonpCallback&quot;</span>;</span><br><span class="line"><span class="comment">// 插入页面</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="property">head</span>.<span class="title function_">appendChild</span>(<span class="string">&quot;script&quot;</span>);</span><br><span class="line"><span class="comment">// 自定义函数接受服务器响应数据</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">jsonpCallback</span> (data)&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>CORS跨域资源共享</strong></p>
+<p>原理：服务器设置<code>Access-Control-Allow-OriginHTTP</code>响应头之后，浏览器将会允许跨域请求。</p>
+<p>请求时，客户端使用一些特殊的请求告知服务器跨域请求。服务器根据自身规则决定是否允许跨域，如果允许，则会通过响应头告知客户端可以发送跨域请求。</p>
+<p>限制：浏览器需要支持HTML5、POST、PUT等，兼容IE9以上</p>
+<p><strong>nginx反向代理</strong></p>
+<p>nginx作为反向代理服务器，可以监听客户端的请求，并将这些请求转发到后端服务器。</p>
+<p>通过将特定的前端项目域名映射到一个后端接口服务其上。</p>
+<p>这样，当前的项目尝试访问后端接口时，nginx会检测到请求的前缀，并将请求转发到后端服务器。</p>
+<p>后端服务器在处理请求时，不会知道这些请求实际上来自于nginx代理，因为nginx会通过rewrite命令去除掉请求中的前缀。</p>
+<p><strong>VUE中proxy代理</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">devServer</span>: &#123;</span><br><span class="line">    <span class="attr">proxy</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;/api&#x27;</span>: <span class="string">&#x27;http://localhost:8080&#x27;</span>,</span><br><span class="line">      <span class="attr">changeOrigin</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="TCP-连接的过程"><a href="#TCP-连接的过程" class="headerlink" title="TCP 连接的过程"></a>TCP 连接的过程</h2><p>TCP协议通过三次握手建立可靠的对点连接</p>
+<p>首先服务器进入监控状态，然后才可以建立连接</p>
+<p>第一次握手：建立连接时，客户端发送SYN包到服务器，等待服务器确认。此次握手是客户端希望和服务器建立连接。</p>
+<p>第二次握手：服务器收到SYN包后，然后回应客户端一个SYN+ACK包。此次握手服务器回应，表示已经收到并同意客户端连接请求。</p>
+<p>第三次握手：客户端接受服务器的SYN包后，向服务器再发送ACK包。</p>
+<p>最后服务器接收到ACK包，建立连接完成。</p>
+<h2 id="如何实现Token加密"><a href="#如何实现Token加密" class="headerlink" title="如何实现Token加密"></a>如何实现Token加密</h2><p>常见的token格式JWT</p>
+<p>token分为三段：header、payload、signature</p>
+<p>分别标识：签名算法和令牌类型（header）、主体信息包含令牌过期时间，发布时间发行者，主体内容（payload）、特定的的算法对前面两部分加密，得到加密结果（signature）</p>
+<p>在密钥不泄露的前提下，一个通过验证的token是值得信任的</p>
+<h2 id="网络的五层模型-⭐"><a href="#网络的五层模型-⭐" class="headerlink" title="网络的五层模型 ⭐"></a>网络的五层模型 ⭐</h2><p>应用层、传输层、网络层、数据链路层、物理层</p>
+<h2 id="get、post-的区别-⭐⭐"><a href="#get、post-的区别-⭐⭐" class="headerlink" title="get、post 的区别 ⭐⭐"></a>get、post 的区别 ⭐⭐</h2><p>两者的区别主要是浏览器默认行为导致的</p>
 <ol>
-<li>get请求，不会附带请求体</li>
-<li>get请求传递的信息量有限，适合少量传递，post没有限制</li>
-<li>get请求传递的数据会携带到path参数上</li>
-<li></li>
+<li>GET请求时，不会附带请求体。（GET请求不能传递<code>data</code>，POST可以传递<code>params</code>和<code>data</code>）</li>
+<li>GET请求传递的信息量有限，适合传递少量数据，POST请求传递信息量是没有限制的，适合传递大量数据。</li>
+<li>GET请求传递的<code>params</code>数据会附带到path参数中，能够通过分享地址完整的重现页面，但是也会暴露数据，如果有敏感数据不应该使用GET请求，至少不应该放到path中。</li>
+<li>刷新页面时，如果当前页面是通过POST请求得到的，浏览器会提示用户是否重新提交；若是GET请求得到的页面则没有提示。</li>
+<li>GET请求的地址可以被保存为浏览器书签，POST不可以。</li>
+<li>GET请求只能传递ASCII数据，遇到非ASCII数据需要进行编码；POST请求没有限制。</li>
 </ol>
-<h2 id="7-cookie、Session-Storage、Local-Storage-的区别？"><a href="#7-cookie、Session-Storage、Local-Storage-的区别？" class="headerlink" title="7. cookie、Session Storage、Local Storage 的区别？"></a>7. cookie、Session Storage、Local Storage 的区别？</h2><p>sessionStorage：浏览器关闭，不会保存数据</p>
-<p>localStorage：浏览器关闭重新打开，数据存在</p>
-<h2 id="8-HTTP-请求的方法？"><a href="#8-HTTP-请求的方法？" class="headerlink" title="8. HTTP 请求的方法？"></a>8. HTTP 请求的方法？</h2><ol>
-<li>get</li>
-<li>post</li>
-<li>delete</li>
-<li>put</li>
-<li>option</li>
-<li></li>
+<h2 id="cookie、Session-Storage、Local-Storage-的区别-⭐⭐"><a href="#cookie、Session-Storage、Local-Storage-的区别-⭐⭐" class="headerlink" title="cookie、Session Storage、Local Storage 的区别 ⭐⭐"></a>cookie、Session Storage、Local Storage 的区别 ⭐⭐</h2><p>都是保存本地数据的方式</p>
+<p>cookie：兼容性好，所有浏览器都支持。</p>
+<p>浏览器针对cookie会有一些默认行为，比如当响应头出现<code>set-cookie</code>字段时，浏览器会自动保存cookie的值；再比如，浏览器发送请求时，会附带匹配的cookie到请求头中。这些默认行为，使得cookie长期担任维持登陆状态的责任。与此同时，也正是因为浏览器默认行为，给了恶意攻击者可乘之机，CSRF攻击就是一个典型的利用cookie的攻击方式。虽然cookie不断改进，但前端仍然需要另一种更为安全的保存数据的方式。</p>
+<p>HTML5新增了sessionStorage、localStorage。没有针对的浏览器默认行为。</p>
+<p>sessionStorage：用于保存会话级的数据，浏览器关闭，不会保存数据</p>
+<p>localStorage：用于更长久的数据保存，浏览器关闭重新打开，数据存在</p>
+<p>cookie的大小有限制，一般浏览器会限制同一域下cookie总量为4M，而sessionStorage、localStorage没有大小限制。</p>
+<p>cookie会与domain、path关联，而sessionStorage、localStorage只跟domain关联。</p>
+<h2 id="HTTP-请求的方法-⭐"><a href="#HTTP-请求的方法-⭐" class="headerlink" title="HTTP 请求的方法 ⭐"></a>HTTP 请求的方法 ⭐</h2><ol>
+<li>GET：表示向服务器获取资源</li>
+<li>POST：表示向服务器提交信息，通常用于产生新的数据，例如注册，新增</li>
+<li>PUT：表示希望修改服务器的数据，通常用于修改</li>
+<li>DELETE：表示希望删除服务器的数据</li>
+<li>OPTION：发生在跨域的预检请求中，表示客户端向服务器申请跨域请求</li>
+<li>CONNECT：用于建立连接通道，通常在代理场景中使用，网页中很少用到</li>
+<li>TRACK：回显服务器收到的请求，主要用于测试和诊断</li>
 </ol>
-<h2 id="9-优化网络性能的方法？"><a href="#9-优化网络性能的方法？" class="headerlink" title="9. 优化网络性能的方法？"></a>9. 优化网络性能的方法？</h2>
+<h2 id="优化网络性能的方法"><a href="#优化网络性能的方法" class="headerlink" title="优化网络性能的方法"></a>优化网络性能的方法</h2>
       
     </div>
     
