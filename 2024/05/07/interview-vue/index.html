@@ -17,7 +17,7 @@
 <meta property="og:description" content="VueMVVM 的理解 ⭐MVVM是一种设计思想，Model-View-viewModel。 Model层代表数据模型，指后台数据，可以在model中定义数据的修改和操作业务的逻辑。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-07T05:56:08.000Z">
-<meta property="article:modified_time" content="2024-07-22T11:24:11.758Z">
+<meta property="article:modified_time" content="2024-07-25T09:02:33.152Z">
 <meta property="article:author" content="Mr Jereky">
 <meta property="article:tag" content="Interview">
 <meta property="article:tag" content="vue">
@@ -331,8 +331,12 @@
 <li>响应式系统提升：Vue3中 响应式数据原理改成Proxy，可以监听动态新增删除的属性，以及数组变化</li>
 <li>编译优化：Vue2通过标记静态根节点优化diff，Vue3标记和提升所有静态根节点，diff的时候只需要对比动态节点内容</li>
 <li>打包体积优化：移除了一些不常用的api（inline-template、filter）</li>
-<li>生命周期的变化：使用setup代替之前的beforeCreate和created</li>
+<li>生命周期的变化：使用<code>setup</code>代替之前的<code>beforeCreate</code>和<code>created</code></li>
 <li>Vue3的template模板支持多个根标签</li>
+<li>VueX状态管理：创建实例的方法改变，Vue2为<code>new Store</code>，Vue3为<code>createStore</code></li>
+<li>Route获取页面实例与路由信息：Vue2通过this获取router实例，Vue3通过使用getCurrentInstance&#x2F;userRoute和userRouter方法获取当前组件实例</li>
+<li>Props的使用变化：Vue2通过this获取props里面的内容，Vue3直接通过props</li>
+<li>父子组件传值：Vue3在向父组件传会数据时，如使用的自定义名称，如backData，则需要在emits中定义一下</li>
 </ol>
 
       
