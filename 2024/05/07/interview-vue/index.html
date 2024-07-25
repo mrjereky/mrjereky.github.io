@@ -17,7 +17,7 @@
 <meta property="og:description" content="VueMVVM 的理解 ⭐MVVM是一种设计思想，Model-View-viewModel。 Model层代表数据模型，指后台数据，可以在model中定义数据的修改和操作业务的逻辑。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-07T05:56:08.000Z">
-<meta property="article:modified_time" content="2024-07-11T06:06:48.563Z">
+<meta property="article:modified_time" content="2024-07-22T11:24:11.758Z">
 <meta property="article:author" content="Mr Jereky">
 <meta property="article:tag" content="Interview">
 <meta property="article:tag" content="vue">
@@ -202,22 +202,34 @@
 <p>view层代表UI视图，指我们能看见的所有页面，将数据转换成UI展示出来。</p>
 <p>view和model之间没有直接联系，而是通过viewModel进行交互。model数据变化会立即反应到view上，view数据的变化也会同步到model中。</p>
 <p>viewModel通过双向数据绑定，将view和model连接起来，view和model之间同步完全是自动的。<br>开发者只需要关注业务逻辑，不需要关注数据状态的同步问题。</p>
-<h2 id="Vue-双向数据绑定原理-⭐"><a href="#Vue-双向数据绑定原理-⭐" class="headerlink" title="Vue 双向数据绑定原理 ⭐"></a>Vue 双向数据绑定原理 ⭐</h2><p>Vue2中使用数据劫持结合发布订阅模式（pubSub模式）的方式</p>
-<h2 id="3-数据响应式原理？"><a href="#3-数据响应式原理？" class="headerlink" title="3. 数据响应式原理？"></a>3. 数据响应式原理？</h2><h2 id="4-v-model-双向绑定原理？"><a href="#4-v-model-双向绑定原理？" class="headerlink" title="4. v-model 双向绑定原理？"></a>4. v-model 双向绑定原理？</h2><p>v-model是一个语法糖。它会生成一个属性和一个事件。一般作用于表单元素或自定义组件。</p>
+<h2 id="Vue-双向数据绑定原理-⭐"><a href="#Vue-双向数据绑定原理-⭐" class="headerlink" title="Vue 双向数据绑定原理 ⭐"></a>Vue 双向数据绑定原理 ⭐</h2><p>Vue2中使用数据劫持结合发布订阅模式（pubSub模式）的方式，通过<code>Object.defineProperty</code>来劫持各个属性的<code>setter</code>、<code>getter</code>，在数据变化时发布消息给订阅者，触发相应的监听回调。</p>
+<p>当把JS对象传递给Vue实例作为data选项，Vue将遍历data，通过<code>Object.defineProperty</code>将他们转为<code>setter</code>、<code>getter</code>。Vue内部进行依赖追踪，属性被访问和修改会通知变化。</p>
+<p>Vue的数据双向绑定整合了<code>Observe</code>、<code>Compile</code>、<code>Watcher</code>三者，通过<code>Observe</code>监听<code>model</code>数据变化，通过<code>Compile</code>解析模板指令，最后利用<code>Watcher</code>搭建两者通信的桥梁。达到数据变化更新视图，视图交互变化数据变更的双向绑定。</p>
+<h2 id="数据响应式原理⭐"><a href="#数据响应式原理⭐" class="headerlink" title="数据响应式原理⭐"></a>数据响应式原理⭐</h2><p>Vue在初始化数据时，会使用<code>Object.defineProperty</code>重新定义data中所有属性，当页面使用对应属性时，首先会进行依赖收集（收集当前组建的<code>watcher</code>），如果属性发生变化会通知相关依赖进行更新操作（发布订阅）</p>
+<h2 id="v-model-双向绑定原理-⭐⭐"><a href="#v-model-双向绑定原理-⭐⭐" class="headerlink" title="v-model 双向绑定原理 ⭐⭐"></a>v-model 双向绑定原理 ⭐⭐</h2><p>v-model是一个语法糖。它会生成一个属性和一个事件。一般作用于表单元素或自定义组件。</p>
 <p>以输入框为例，当用户输入内容时，会触发input事件，从而更新value；当value改变同样会更新视图。</p>
-<h2 id="5-虚拟DOM？"><a href="#5-虚拟DOM？" class="headerlink" title="5. 虚拟DOM？"></a>5. 虚拟DOM？</h2><p>首先虚拟dom是一个JS对象，描述视图结构，主要解决了渲染效率问题</p>
-<p>vue组件都有一个render函数，每个render函数都会返回一个虚拟dom树<br>组件首次渲染，先生成虚拟dom树，然后根据虚拟dom创建真实的dom树，最后将真实dom树挂载到页面合适位置。<br>当响应式数据变化，重新渲染页面，render会生成新的虚拟dom树，然后进行dom树对比，只更新必要的真实dom，以达到最小的改动。</p>
-<h2 id="6-vue生命周期？"><a href="#6-vue生命周期？" class="headerlink" title="6. vue生命周期？"></a>6. vue生命周期？</h2><ol>
-<li>beforeCreate</li>
-<li>created</li>
-<li>beforeMount</li>
-<li>mounted</li>
-<li>beforeUpdate</li>
-<li>updated</li>
-<li>beforeDestroy</li>
-<li>destroyed</li>
+<p>表单元素中使用，会根据表单类型生成合适的属性和事件，<code>value-@input</code>、<code>checked-@change</code></p>
+<p>自定义组件中使用，默认是value和input，也可以通过组件的<code>model</code>配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 使用自定义组件 --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;comp v-model=&quot;data&quot;&gt;&lt;/comp&gt;</span><br><span class="line">	&lt;!-- 语法糖  两者等效 --&gt;</span><br><span class="line">	&lt;comp :number=&quot;data&quot; @change=&quot;data=$event&quot;&gt;&lt;/comp&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 子组件配置model --&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  export default &#123;</span><br><span class="line">    model: &#123;</span><br><span class="line">      prop: &#x27;number&#x27;,</span><br><span class="line">      event: &#x27;change&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="虚拟DOM-⭐⭐"><a href="#虚拟DOM-⭐⭐" class="headerlink" title="虚拟DOM ⭐⭐"></a>虚拟DOM ⭐⭐</h2><p>首先虚拟 DOM 是一个JS对象，描述视图结构，主要解决了渲染效率问题</p>
+<p>vue组件都有一个render函数，每个render函数都会返回一个虚拟dom树<br>组件首次渲染，先生成虚拟dom树，然后根据虚拟dom创建真实的dom树，最后将真实dom树挂载到页面合适位置。<br>当响应式数据变化，重新渲染页面，render会生成新的虚拟dom树，然后进行dom树对比，<strong>只更新必要的真实dom，以达到最小的改动</strong>。</p>
+<h2 id="Vue生命周期-⭐⭐⭐"><a href="#Vue生命周期-⭐⭐⭐" class="headerlink" title="Vue生命周期 ⭐⭐⭐"></a>Vue生命周期 ⭐⭐⭐</h2><p>beforeCreate、created、beforeMount、mounted、beforeUpdate、updated、beforeDestroy、destroyed</p>
+<p>创建Vue实例实例组件流程：</p>
+<ol>
+<li>实例创建，初始化操作，设置一些私有属性到实例</li>
+<li>运行<code>beforeCreate</code></li>
+<li>注入流程：处理属性、computed、methods、data、provide、inject。最后使用代理模式挂载到实例</li>
+<li>运行<code>created</code></li>
+<li>生成render函数</li>
+<li>运行<code>beforeMount</code></li>
+<li>生成真实DOM</li>
+<li>运行<code>mounted</code></li>
+<li>挂载完成</li>
 </ol>
-<h2 id="7-vue组件通信？"><a href="#7-vue组件通信？" class="headerlink" title="7. vue组件通信？"></a>7. vue组件通信？</h2><p>父子组件传值</p>
+<h2 id="Vue组件通信-⭐⭐⭐"><a href="#Vue组件通信-⭐⭐⭐" class="headerlink" title="Vue组件通信 ⭐⭐⭐"></a>Vue组件通信 ⭐⭐⭐</h2><p>父子组件传值</p>
 <ol>
 <li>子组件通过props接收父组件数据</li>
 <li>子组件通过$emit触发父组件方法传递数据</li>
@@ -231,25 +243,98 @@
 <li>provide和inject，父组件中provide提供的数据，后代组件可以通过inject进行注册使用</li>
 <li>vuex进行状态管理</li>
 </ol>
-<h2 id="8-vue-中的data为什么是函数？"><a href="#8-vue-中的data为什么是函数？" class="headerlink" title="8. vue 中的data为什么是函数？"></a>8. vue 中的data为什么是函数？</h2><p>vue中数据以函数返回值形式定义<br>每复用一次组件就会返回一个新的data，让每个组件实例维护自己的数据，类似于每个组件实例创建了一个私有的数据空间</p>
-<h2 id="9-vue-router"><a href="#9-vue-router" class="headerlink" title="9. vue-router"></a>9. vue-router</h2><h3 id="9-1-hash模式、history模式区别？"><a href="#9-1-hash模式、history模式区别？" class="headerlink" title="9.1 hash模式、history模式区别？"></a>9.1 hash模式、history模式区别？</h3><ol>
+<h2 id="vue-中的data为什么是函数-⭐⭐⭐"><a href="#vue-中的data为什么是函数-⭐⭐⭐" class="headerlink" title="vue 中的data为什么是函数 ⭐⭐⭐"></a>vue 中的data为什么是函数 ⭐⭐⭐</h2><p>vue中数据以函数返回值形式定义<br>每复用一次组件就会返回一个新的data，让每个组件实例维护自己的数据，类似于每个组件实例创建了一个私有的数据空间</p>
+<h2 id="hash模式、history模式区别-⭐"><a href="#hash模式、history模式区别-⭐" class="headerlink" title="hash模式、history模式区别 ⭐"></a>hash模式、history模式区别 ⭐</h2><ol>
 <li>url显示不同，hash模式会有#， history没有</li>
 <li>页面刷新时，hash模式会正常加载对应页面；history模式如果没有特殊处理会返回404，需要后端进行处理，将所有页面都配置重定向首页路由</li>
 <li>兼容上，hash可以支持低版本浏览器和IE</li>
 </ol>
-<h3 id="9-2-router、-route-区别？"><a href="#9-2-router、-route-区别？" class="headerlink" title="9.2 $router、$route 区别？"></a>9.2 $router、$route 区别？</h3><p>$router是全局路由实例<br>常用方法 .push  .go  .replace 进行路由的跳转</p>
-<p>$route是当前路由的信息<br>包含当前路由的  路径(.path) 参数(.params)  query对象(.query)等</p>
-<h3 id="9-3-导航守卫？"><a href="#9-3-导航守卫？" class="headerlink" title="9.3 导航守卫？"></a>9.3 导航守卫？</h3><h3 id="9-4-vueRouter-完整的导航解析流程"><a href="#9-4-vueRouter-完整的导航解析流程" class="headerlink" title="9.4 vueRouter 完整的导航解析流程"></a>9.4 vueRouter 完整的导航解析流程</h3><h2 id="10-vuex？"><a href="#10-vuex？" class="headerlink" title="10. vuex？"></a>10. vuex？</h2><p>状态管理器。<br>采用集中式存储管理应用的所有组件状态。每一个vuex应用的核心就是store（仓库）。包含应用中大部分的状态（state）</p>
-<h2 id="11-vue-cli-工程中用到的技术？"><a href="#11-vue-cli-工程中用到的技术？" class="headerlink" title="11. vue-cli 工程中用到的技术？"></a>11. vue-cli 工程中用到的技术？</h2><h2 id="12-v-if、v-show-区别？"><a href="#12-v-if、v-show-区别？" class="headerlink" title="12. v-if、v-show 区别？"></a>12. v-if、v-show 区别？</h2><p>两者都是动态的显示dom元素</p>
-<p>v-show：首次都会进行渲染，通过css控制显示隐藏<br>会有更大的初始化渲染消耗</p>
-<p>v-if：只有v-if的值为真才会被渲染，动态的向dom树添加或删除dom元素<br>会有更大的切换消耗</p>
-<h2 id="13-插槽、作用域插槽？"><a href="#13-插槽、作用域插槽？" class="headerlink" title="13 插槽、作用域插槽？"></a>13 插槽、作用域插槽？</h2><p>插槽作用是子组件中提供了可以替换的模板，父组件可以更换模板的内容</p>
+<h2 id="router、-route-⭐⭐"><a href="#router、-route-⭐⭐" class="headerlink" title="$router、$route ⭐⭐"></a>$router、$route ⭐⭐</h2><p>$router：是全局路由实例<br>常用方法 .push  .go  .replace 进行路由的跳转</p>
+<p>$route：是当前路由的信息<br>包含当前路由的  路径($route.path) 参数($route.params)  query对象($route.query)等</p>
+<h2 id="导航守卫"><a href="#导航守卫" class="headerlink" title="导航守卫"></a>导航守卫</h2><p>全局前置&#x2F;钩子函数：<code>beforeEach</code>、<code>beforeResolve</code>、<code>afterEach</code></p>
+<p>路由独享的守卫：<code>beforeEnter</code></p>
+<p>组件内的守卫：<code>beforeRouterEnter</code>、<code>beforeRouterUpdate</code>、<code>beforeRouterLeave</code></p>
+<h2 id="vueRouter-完整的导航解析流程"><a href="#vueRouter-完整的导航解析流程" class="headerlink" title="vueRouter 完整的导航解析流程"></a>vueRouter 完整的导航解析流程</h2><p>一次完整的导航解析流程：</p>
+<ol>
+<li>导航被触发</li>
+<li>在失活的组件中调用离开守卫</li>
+<li>调用全局的<code>beforeEach</code>守卫</li>
+<li>在重用的组件中调用<code>beforeRouterUpdate</code>守卫（2.2+）</li>
+<li>在路由配置中调用<code>beforeEnter</code></li>
+<li>解析异步路由组件</li>
+<li>在被激活的组件中调用<code>beforeRouterEnter</code></li>
+<li>调用全局的<code>beforeResolve</code>守卫（2.5+）</li>
+<li>导航被确认</li>
+<li>调用全局的<code>afterEach</code>钩子</li>
+<li>触发DOM更新</li>
+<li>用创建好的实例调用<code>beforeRouterEnter</code>守卫中传给<code>next</code>的回调函数</li>
+</ol>
+<h2 id="vuex⭐⭐"><a href="#vuex⭐⭐" class="headerlink" title="vuex⭐⭐"></a>vuex⭐⭐</h2><p>状态管理器。</p>
+<p>采用集中式存储管理应用的所有组件状态。</p>
+<p>每一个vuex应用的核心就是store（仓库）</p>
+<p>包含应用中大部分的状态（state）</p>
+<h2 id="v-if、v-show-⭐⭐"><a href="#v-if、v-show-⭐⭐" class="headerlink" title="v-if、v-show ⭐⭐"></a>v-if、v-show ⭐⭐</h2><p>两者都是动态的显示dom元素</p>
+<p>v-show：首次都会进行渲染，通过css控制显示隐藏，会有更大的初始化渲染消耗</p>
+<p>v-if：只有v-if的值为真才会被渲染，动态的向dom树添加或删除dom元素，会有更大的切换消耗</p>
+<h2 id="插槽、作用域插槽-⭐"><a href="#插槽、作用域插槽-⭐" class="headerlink" title="插槽、作用域插槽 ⭐"></a>插槽、作用域插槽 ⭐</h2><p>插槽作用是子组件中提供了可以替换的模板，父组件可以更换模板的内容</p>
 <p>作用域插槽给了子组件将数据返回给父组件的能力，子组件一样可以复用，同时父组件也可以重新组织内容和样式</p>
-<p>具名插槽</p>
-<h2 id="14-keep-alive？"><a href="#14-keep-alive？" class="headerlink" title="14. keep-alive？"></a>14. keep-alive？</h2><p>vue中内置组件，用于缓存内部组件实例；<br>keep-alive内部组件切回时，不用重新创建组件实例，而是使用缓存实例；<br>避免了重建开销，也保留了组件状态。</p>
-<h2 id="15-nextTick？"><a href="#15-nextTick？" class="headerlink" title="15. nextTick？"></a>15. nextTick？</h2><p>vue更新dom是异步更新的，数据变化不会立马更新dom完成。<br>nextTick回调函数就是就是在下次dom更新完成后执行的，延迟回调。</p>
-<h2 id="16-vue-的-SSR？"><a href="#16-vue-的-SSR？" class="headerlink" title="16. vue 的 SSR？"></a>16. vue 的 SSR？</h2><p>原理：通过vue-server-render把vue组件输出一个完整的HTML，输出到客户端。到达客户端后重新展开一个单页面应用</p>
-<h2 id="17-vue-中的性能优化？"><a href="#17-vue-中的性能优化？" class="headerlink" title="17. vue 中的性能优化？"></a>17. vue 中的性能优化？</h2><h2 id="18-vue2和vue3的区别？"><a href="#18-vue2和vue3的区别？" class="headerlink" title="18. vue2和vue3的区别？"></a>18. vue2和vue3的区别？</h2>
+<h2 id="keep-alive"><a href="#keep-alive" class="headerlink" title="keep-alive"></a>keep-alive</h2><p>Vue内置组件，用于缓存内部组件实例。</p>
+<p>keep-alive内部组件切回时，不用重新创建组件实例，而是使用缓存实例。</p>
+<p>避免了重建开销，也保留了组件状态。</p>
+<h2 id="nextTick"><a href="#nextTick" class="headerlink" title="nextTick"></a>nextTick</h2><p>nextTick回调函数是在下次dom更新完成后执行的，延迟回调</p>
+<p>因为vue更新dom是异步的，数据变化不会立即更新dom完成</p>
+<h2 id="vue-的-SSR-服务端渲染"><a href="#vue-的-SSR-服务端渲染" class="headerlink" title="vue 的 SSR(服务端渲染)"></a>vue 的 SSR(服务端渲染)</h2><p>原理：通过vue-server-render把vue组件输出一个完整的HTML，输出到客户端。到达客户端后重新展开一个单页面应用</p>
+<h2 id="vue-cli-工程中用到的技术"><a href="#vue-cli-工程中用到的技术" class="headerlink" title="vue-cli 工程中用到的技术"></a>vue-cli 工程中用到的技术</h2><p>Vue.js：vue-cli工程的核心，主要特点是双向数据绑定和组件系统</p>
+<p>vue-router：Vue官方推荐使用的路由框架</p>
+<p>VueX：专为Vue.js应用项目开发的状态管理器，主要维护Vue组件之间公用的一些变量和方法</p>
+<p>axios（fetch、ajax）：用于发送http请求，基于promise设计</p>
+<p>webpack：模块加载和vue-cli工程打包器</p>
+<p>eslint：代码规范工具</p>
+<p>vux： 一个专为Vue设计的移动端UI组件库</p>
+<h2 id="Vue中的性能优化"><a href="#Vue中的性能优化" class="headerlink" title="Vue中的性能优化"></a>Vue中的性能优化</h2><p><strong>编码阶段</strong></p>
+<ul>
+<li>尽量减少data中的数据</li>
+<li>v-if、v-for不能连用</li>
+<li>需要使用v-for给每项元素绑定事件时使用事件代理</li>
+<li>SPA(单页面应用)采用keep-alive缓存组件</li>
+<li>在更多的情况下，使用v-if替代v-show</li>
+<li>key保证唯一</li>
+<li>使用路由懒加载，异步组件</li>
+<li>防抖、节流</li>
+<li>第三方模块按需导入</li>
+<li>长列表滚动到可视区域动态加载</li>
+<li>图片懒加载</li>
+</ul>
+<p><strong>SEO优化</strong></p>
+<ul>
+<li>预渲染</li>
+<li>服务端渲染SSR</li>
+</ul>
+<p><strong>打包优化</strong></p>
+<ul>
+<li>压缩代码</li>
+<li><code>Tree Shaking</code>（树摇优化）&#x2F;<code>Scope Hoisting</code></li>
+<li>使用<em>CDN</em>加载第三方模块</li>
+<li>多线程打包 <code>happypack</code></li>
+<li><code>splitChunks</code> 抽离公共文件</li>
+<li><code>sourceMap</code> 优化</li>
+</ul>
+<p><strong>用户体验</strong></p>
+<ul>
+<li>骨架屏</li>
+<li><em>PWA</em></li>
+</ul>
+<p>还可以使用缓存（客户端缓存、服务端缓存）优化、服务端开启<em>gzip</em>压缩等</p>
+<h2 id="Vue2和Vue3的区别"><a href="#Vue2和Vue3的区别" class="headerlink" title="Vue2和Vue3的区别"></a>Vue2和Vue3的区别</h2><ol>
+<li>源码组织方式变化：使用TS重写</li>
+<li>支持Composition API：基于函数的API，更加灵活组织组件逻辑（Vue2用的是optionsAPI）</li>
+<li>响应式系统提升：Vue3中 响应式数据原理改成Proxy，可以监听动态新增删除的属性，以及数组变化</li>
+<li>编译优化：Vue2通过标记静态根节点优化diff，Vue3标记和提升所有静态根节点，diff的时候只需要对比动态节点内容</li>
+<li>打包体积优化：移除了一些不常用的api（inline-template、filter）</li>
+<li>生命周期的变化：使用setup代替之前的beforeCreate和created</li>
+<li>Vue3的template模板支持多个根标签</li>
+</ol>
+
       
     </div>
     
